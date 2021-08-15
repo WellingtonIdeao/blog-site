@@ -9,8 +9,8 @@ class PublishedManager(models.Manager):
 
 
 class Post(models.Model):
-    objects = models.Manager()  # The default manager.
-    published = PublishedManager()  # Custom manager.
+    # objects = models.Manager()  # The default manager.
+    # published = PublishedManager()  # Custom manager.
 
     STATUS_CHOICES = (
         ('draft', 'Draft'),
@@ -38,3 +38,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+
+class PublishedPost(Post):
+    objects = PublishedManager()  # default Custom manager
+
+    class Meta:
+        proxy = True
