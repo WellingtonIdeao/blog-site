@@ -210,6 +210,12 @@ class PostModelTests(TestCase):
         choices = post._meta.get_field('status').choices
         self.assertEqual(len(choices), 2)
 
+    def test_get_absolute_url(self):
+        post = Post.objects.get(pk=1)
+        url = post.get_absolute_url()
+        expected_url = f'/blog/post/{post.slug}/'
+        self.assertEqual(url, expected_url)
+
 
 
 
