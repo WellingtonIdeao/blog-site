@@ -20,7 +20,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=250, unique=True)
     author = models.ForeignKey(User,
                                related_name='blog_posts',
-                               related_query_name='blog_post',
+                               related_query_name='post',
                                on_delete=models.CASCADE)
 
     body = models.TextField()
