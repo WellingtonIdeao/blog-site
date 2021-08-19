@@ -5,7 +5,7 @@
     <h1>Post list</h1>
     <ul>
         {% for post in post_list %}
-            <li>{{ post }}</li>
+            <li> <a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
         {% empty %}
             <li>No post yet.</li>
         {% endfor %}
