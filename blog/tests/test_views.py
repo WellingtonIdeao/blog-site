@@ -8,16 +8,12 @@ from ..models import Post
 class PostListViewTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        # Create 3 Post objects
-        n_post = 3
         user = User.objects.create_superuser(username='admin', password='admin')
-        for index in range(n_post):
-            title = 'FOO text'
-            unique_title = title+str(index)
-            Post.objects.create(title=unique_title,
-                                slug=slugify(unique_title),
-                                author=user,
-                                body='FOO body')
+        title = 'FOO title'
+        Post.objects.create(title=title,
+                            slug=slugify(title),
+                            author=user,
+                            body='FOO body')
 
     def test_view_url_exists_at_desired_location(self):
         url = '/blog/post/'
@@ -42,11 +38,30 @@ class PostListViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue('post_list' in response.context)
 
-    def test_view_list_all_posts(self):
+    def test_view_list_post(self):
+        post = Post.objects.get(pk=1)
+        print(post)
         url = reverse('blog:post-list')
+        url2 = '/blog/post/'
+        print(url)
+        response = self.client.get(url2)
+        length = response.context['object_list']
+        print(response.context)
+        self.assertTrue(len(response.context['object_list']) == 0)
+
+
+class PostDetailViewTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        user = User.objects.create_superuser(username='admin', password='admin')
+        title = 'FOO title'
+        Post.objects.create(title=title,
+                            slug=slugify(title),
+                            author=user,
+                            body='FOO body')
+
+    def test_view_url_exists_at_desired_location(self):
+        post = Post.objects.get(pk=1)
+        url = reverse('blog:post-detail', kwargs={'slug': post.slug})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.context['post_list']), 0)
-
-
-
