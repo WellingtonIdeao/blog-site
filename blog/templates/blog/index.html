@@ -1,0 +1,30 @@
+{% extends "blog/base_index.html" %}
+{% block title %}Post List{% endblock title %}
+{% block content %}
+<!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                {% for post in post_list %}
+                <div class="post-preview">
+                    <a href="post.html">
+                        <h2 class="post-title">
+                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                        </h2>
+                    </a>
+                    <p class="post-meta">Posted by <strong>{{post.author }}</strong> on {{ post.publish|date:"SHORT_DATE_FORMAT" }}</p>
+                </div>
+                <hr>
+                {% empty %}
+                    <li>No post yet.</li>
+                {% endfor %}
+                <!-- Pager -->
+                <ul class="pager">
+                    <li class="next">
+                        <a href="#">Older Posts &rarr;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

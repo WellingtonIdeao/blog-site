@@ -5,7 +5,7 @@ from .models import Post, PublishedPost
 
 
 class PostListView(ListView):
-    template_name = 'blog/post/list.html'
+    template_name = 'blog/index.html'
     context_object_name = 'post_list'
 
     def get_queryset(self):
@@ -14,7 +14,7 @@ class PostListView(ListView):
 
 
 class PostDetailView(DetailView):
-    template_name = 'blog/post/detail.html'
+    template_name = 'blog/post/post_detail.html'
     context_object_name = 'post'
 
     def get_queryset(self):

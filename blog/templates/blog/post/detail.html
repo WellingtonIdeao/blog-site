@@ -1,8 +1,0 @@
-{% extends 'blog/base.html' %}
-
-{% block title %}{{ post.title }}{% endblock title %}
-{% block content %}
-    <h1>{{ post.title }}</h1>
-    <p>By {{post.author }} on {{ post.publish|date:"SHORT_DATE_FORMAT" }}</p>
-    <p>{{ post.body }}</p>
-{% endblock content %}
