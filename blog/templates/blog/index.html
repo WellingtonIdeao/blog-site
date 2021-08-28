@@ -21,7 +21,14 @@
                 <!-- Pager -->
                 <ul class="pager">
                     <li class="next">
-                        <a href="#">Older Posts &rarr;</a>
+                        {% if page_obj.has_next %}
+                            <a href="?page={{page_obj.next_page_number }}">Older Posts &rarr;</a>
+                        {% endif %}
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{page_obj.previous_page_number }}">Previous Posts &larr;</a>
+                        {% endif %}
+
+
                     </li>
                 </ul>
             </div>
