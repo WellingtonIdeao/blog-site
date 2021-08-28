@@ -8,7 +8,7 @@ from ..models import Post, PublishedPost
 class PostListViewTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        n_posts = 3
+        n_posts = 5
         user = User.objects.create_superuser(username='admin', password='admin')
         title = 'FOO title'
 
@@ -47,7 +47,28 @@ class PostListViewTests(TestCase):
         url = reverse('blog:index')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['post_list'].count(), 3)
+        self.assertEqual(response.context['post_list'].count(), 4)
+
+    def test_view_pagination_is_four(self):
+        url = reverse('blog:index')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('is_paginated' in response.context)
+        self.assertEqual(response.context['is_paginated'], True)
+        self.assertTrue('page_obj' in response.context)
+        self.assertTrue('paginator' in response.context)
+        self.assertEqual(response.context['post_list'].count(), 4)
+
+    def test_view_lists_all_posts(self):
+        # Get second page and confirm it has (exactly) remaining 1 items
+        url = reverse('blog:index')
+        response = self.client.get(url, data={'page': 2})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('is_paginated' in response.context)
+        self.assertEqual(response.context['is_paginated'], True)
+        self.assertTrue('page_obj' in response.context)
+        self.assertTrue('paginator' in response.context)
+        self.assertEqual(response.context['post_list'].count(), 1)
 
 
 class PostDetailViewTests(TestCase):
