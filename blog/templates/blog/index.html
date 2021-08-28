@@ -18,19 +18,7 @@
                 {% empty %}
                     <li>No post yet.</li>
                 {% endfor %}
-                <!-- Pager -->
-                <ul class="pager">
-                    <li class="next">
-                        {% if page_obj.has_next %}
-                            <a href="?page={{page_obj.next_page_number }}">Older Posts &rarr;</a>
-                        {% endif %}
-                        {% if page_obj.has_previous %}
-                            <a href="?page={{page_obj.previous_page_number }}">Previous Posts &larr;</a>
-                        {% endif %}
-
-
-                    </li>
-                </ul>
+                {% include "blog/post/pagination.html" with page_obj=page_obj %}
             </div>
         </div>
     </div>
