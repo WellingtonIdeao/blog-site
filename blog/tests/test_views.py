@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.urls import reverse
-from ..models import Post, PublishedPost
+from ..models import Post, PublishedPost, Profile
 from taggit.models import Tag
 
 
@@ -82,6 +82,7 @@ class PostDetailViewTests(TestCase):
                             author=user,
                             body='FOO body',
                             status='published')
+        Profile.objects.create(user=user, slug=slugify(user.username))
 
     def test_view_url_exists_at_desired_location(self):
         url = '/blog/post/foo-title/'

@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 from django.utils import timezone
 from django.urls import reverse
 from taggit.managers import TaggableManager
+
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
@@ -49,3 +51,12 @@ class PublishedPost(Post):
 
     class Meta:
         proxy = True
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE)
+    slug = models.SlugField(unique=True)
+
+    def __str__(self):
+        return f'Profile for  user{self.user.username}'
