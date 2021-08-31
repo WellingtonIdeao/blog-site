@@ -1,4 +1,5 @@
 {% extends "blog/base_index.html" %}
+{% load blog_tags %}
 {% block title %}Post list by Tag{% endblock title %}
 {% block content %}
 <!-- Main Content -->
@@ -13,7 +14,7 @@
                             {{ post.title }}
                         </h2>
                         <h3 class="post-subtitle">
-                            {{ post.body|truncatewords:30|linebreaks }}
+                            {{ post.body|markdown|truncatewords:30|linebreaks }}
                         </h3>
                     </a>
                     <p class="post-meta">Posted by <strong>{{post.author }}</strong> on {{ post.publish|date:"SHORT_DATE_FORMAT" }}</p>

@@ -1,4 +1,5 @@
 {% extends "blog/base_index.html" %}
+{% load blog_tags %}
 {% block title %}Post List{% endblock title %}
 {% block content %}
 <!-- Main Content -->
@@ -12,7 +13,7 @@
                             {{ post.title }}
                         </h2>
                         <h3 class="post-subtitle">
-                            {{ post.body|truncatewords:30|linebreaks }}
+                            {{ post.body|markdown|truncatewords:30|linebreaks }}
                         </h3>
                     </a>
 
