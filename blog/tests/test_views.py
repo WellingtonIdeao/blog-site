@@ -117,6 +117,14 @@ class PostDetailViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['post'].status, 'published')
 
+    def test_view_get_context_object_names(self):
+        post = PublishedPost.objects.get(pk=1)
+        url = reverse('blog:post-detail', kwargs={'slug': post.slug})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('post' in response.context)
+        self.assertTrue('profile' in response.context)
+
 
 class PostListByTagTests(TestCase):
 
